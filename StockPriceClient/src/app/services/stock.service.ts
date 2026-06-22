@@ -17,9 +17,6 @@ const config = {
   providedIn: 'root',
 })
 export class StockService {
-  /* private apiRootUrl = 'https://localhost:5001'; */
-  // https://localhost:5001
-  // https://localhost:7219
   private connection!: HubConnection;
   private stockUpdateSubject = new Subject<StockUpdate>();
 
@@ -54,7 +51,6 @@ export class StockService {
   private async startConnection() {
     try {
       await this.connection.start();
-      //console.log('SignalR Connected.');
     } catch (err) {
       console.error('SignalR Connection Error, retrying...', err);
       setTimeout(() => this.startConnection(), 6000);

@@ -1,4 +1,4 @@
-<!-- <mat-card class="example-card" appearance="raised">
+<mat-card class="example-card" appearance="raised">
   <mat-card-header>
     <mat-card-title>{{ ticker }}</mat-card-title>
     <mat-card-actions
@@ -23,49 +23,4 @@
       }}%)
     </span>
   </mat-card-content>
-</mat-card> -->
-
-<!-- <div
-  class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 relative transition-colors duration-200"
->
-  <button
-    (click)="onRemoveClick()"
-    class="absolute top-3 right-3 text-gray-400 hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-      <path
-        fill-rule="evenodd"
-        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-        clip-rule="evenodd"
-      />
-    </svg>
-  </button>
-
-  <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{{ ticker }}</h2>
-
-  <div class="flex items-center justify-between">
-    <div class="flex-grow">
-      <p
-        *ngIf="isLoading && !errorMessage"
-        class="text-4xl font-bold mb-2 text-gray-900 dark:text-white"
-      >
-        Loading...
-      </p>
-      <p *ngIf="errorMessage" class="text-xl text-red-500 font-bold mb-2">{{ errorMessage }}</p>
-      <p
-        *ngIf="!isLoading && !errorMessage"
-        class="text-4xl font-bold mb-2 text-gray-900 dark:text-white"
-      >
-        {{ price | currency }}
-      </p>
-      <p [className]="changeClass">{{ changeText }}</p>
-    </div>
-    <div class="w-40 h-24">
-      <canvas #stockChart></canvas>
-    </div>
-  </div>
-</div> -->
-
-<div class="chart-container" style="position: relative; height: 40vh; width: 80vw">
-  <canvas #stockChart></canvas>
-</div>
+</mat-card>

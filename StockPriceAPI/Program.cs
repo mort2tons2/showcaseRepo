@@ -37,36 +37,21 @@ using StockPriceAPI.Stocks;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddMemoryCache();
-
-/*builder.Services.AddSingleton(_ =>
-{
-    string connectionString = builder.Configuration.GetConnectionString("Database");
-
-    var npgsqlDataSource = NpgsqlDataSource.Create(connectionString);
-
-    return npgsqlDataSource;
-});*/
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//builder.Services.AddHostedService<DatabaseInitializer>();
-
 builder.Services.AddHttpClient<StocksClient>(httpClient =>
 {
     var uri = builder.Configuration["Stocks:ApiUrl"];
-    // hvordan sjekke for possible null reference?
     if (uri is not null)
     {
         httpClient.BaseAddress = new Uri(builder.Configuration["Stocks:ApiUrl"]);
     }
 });
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<StockService>();
@@ -86,10 +71,10 @@ builder.Services.AddCors(options =>
 
     options.AddPolicy("SignalRPolicy", policy =>
     {
-        policy.WithOrigins("https://localhost:60448") // Replace with your exact frontend URL
+        policy.WithOrigins("https://localhost:60448")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); // Crucial for SignalR negotiation
+              .AllowCredentials();
     });
 });
 
@@ -100,23 +85,14 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.MapStaticAssets();
 
-/*using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated();
-}*/
-
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate(); // Creates database and applies migrations
+    dbContext.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // app.UseSwagger();
-    // app.UseSwaggerUI();
     app.MapOpenApi();
 
     app.MapScalarApiReference();
@@ -127,9 +103,6 @@ if (app.Environment.IsDevelopment())
         .AllowAnyMethod()
         .AllowCredentials());
 }
-
-// If using the modern .NET 9 Scalar UI alternative
-//app.MapGet("/", () => Results.Redirect("/scalar/v1"));
 
 app.MapGet("/api/stocks", async (string ticker, StockService stockService, CancellationToken cancellationToken) =>
 {
@@ -156,8 +129,6 @@ app.UseCors("AllowAngularApp");
 app.UseCors("SignalRPolicy");
 
 app.UseHttpsRedirection();
-
-//app.UseCors("AllowReactApp");
 
 app.UseAuthorization();
 

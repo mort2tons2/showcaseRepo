@@ -14,6 +14,4 @@ public class StockPriceResponse
         Price = price;
         Timestamp = timestamp;
     }
-
-    //protected StockPriceResponse() {}
 }
