@@ -1,0 +1,1 @@
+C:\Users\dev2m\source\repos\StockPriceTest\StockPriceClient\obj\Debug\StockPriceClient.esproj.CoreCompileInputs.cache

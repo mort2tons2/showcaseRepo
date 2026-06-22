@@ -1,0 +1,39 @@
+<main>
+  <div>
+    <h1 id="tableLabel">Stock price dashboard</h1>
+
+    <section>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Enter stock ticker</mat-label>
+          <input
+            name="ticker"
+            [(ngModel)]="newTicker"
+            (keyup.enter)="addStock()"
+            matInput
+            placeholder=""
+            value=""
+          />
+        </mat-form-field>
+
+        <!--  <mat-form-field class="example-full-width">
+          <mat-label>Leave a comment</mat-label>
+          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+        </mat-form-field> -->
+      </form>
+      <!-- <mat-card-actions
+        > --><button matFab extended (click)="addStock()">
+        <mat-icon>add</mat-icon>
+        Add stock</button
+      ><!-- </mat-card-actions
+      > -->
+      <button matButton (click)="toggleDarkMode()">Toggle Dark/Light Mode</button>
+    </section>
+
+    <section>
+      @for (ticker of stockTickers; track $index) {
+        <app-widget [ticker]="ticker" (remove)="removeStock($event)"></app-widget>
+      }
+    </section>
+  </div>
+</main>

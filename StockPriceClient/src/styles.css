@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+/* Replace indigo-pink.css with an M3 equivalent */
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+
+/* @import '@angular/material/prebuilt-themes/indigo-pink.css'; */
+/* @import '@angular/material/prebuilt-themes/pink-bluegrey.css'; */
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 30px;
+  height: 100%;
+  /* display: block; */
+}
+
+html {
+  height: 100%;
+}

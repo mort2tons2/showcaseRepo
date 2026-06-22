@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="StockPriceAPI/StockPriceAPI.csproj" />
+  <Project Path="StockPriceClient/StockPriceClient.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>

@@ -1,0 +1,18 @@
+section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.example-card {
+  max-width: 500px;
+  min-width: 350px;
+  min-height: 220px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.dev/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

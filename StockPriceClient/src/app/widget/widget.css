@@ -1,0 +1,13 @@
+section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.example-card {
+  max-width: 500px;
+  min-width: 350px;
+  min-height: 220px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
