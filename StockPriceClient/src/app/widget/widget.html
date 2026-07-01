@@ -9,13 +9,13 @@
   </mat-card-header>
 
   <mat-card-content>
-    <span>{{ price | number: '1.2-2' }}</span>
+    <h4>${{ price$ | async | number: '1.2-2' }}</h4>
     Chart here
 
     <span
       [ngClass]="{
-        'text-green-600': currentChange >= 0,
-        'text-red-600': currentChange < 0,
+        'stock-up': currentChange >= 0,
+        'stock-down': currentChange < 0,
       }"
     >
       {{ currentChange >= 0 ? '+' : '' }}{{ currentChange | number: '1.2-2' }} ({{

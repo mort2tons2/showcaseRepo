@@ -6,16 +6,19 @@ public class StocksClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<StocksClient> _logger;
+    private readonly IConfiguration _config;
 
-    public StocksClient(HttpClient httpClient, ILogger<StocksClient> logger)
+    public StocksClient(HttpClient httpClient, ILogger<StocksClient> logger, IConfiguration config)
     {
         _httpClient = httpClient;
         _logger = logger;
+        _config = config;
     }
 
     public async Task<StockPriceRecord?> GetDataForTicker(string ticker, CancellationToken cancellationToken)
     {
-        var queryUrl = $"?function=TIME_SERIES_DAILY&symbol={ticker}&apikey=WJB71WVH8HAVGBNP";
+        var alphaVantageKey = _config["Stocks:AlphaVantageApiKey"];
+        var queryUrl = _config["queryUrl"] + _config["Stocks:AlphaVantageApiKey"];
         // 8PZDV7O4DLKKAFX0
         try
         {
@@ -30,7 +33,7 @@ public class StocksClient
             var content = await response.Content.ReadFromJsonAsync<StockPriceData>(cancellationToken);
             if (content?.TimeSeries == null || content.TimeSeries.Count == 0)
                 return null;
-            
+
 
             // 1. Get the most recent date entry in the dictionary
             var latestEntry = content.TimeSeries

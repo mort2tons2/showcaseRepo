@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using StockPriceAPI.Update;
-using System.Collections;
 
 namespace StockPriceAPI.Stocks;
 

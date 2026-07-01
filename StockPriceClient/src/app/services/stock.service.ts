@@ -28,7 +28,7 @@ export class StockService {
   }
 
   fetchInitialPrice(ticker: string): Observable<{ price: number }> {
-    return this.http.get<{ price: number }>(`${config.apiRootUrl}/api/stocks?ticker=${ticker}`);
+    return this.http.get<{ price: number }>(`${config.apiRootUrl}/api/stocks/${ticker}`);
   }
 
   private async initializeSignalR() {

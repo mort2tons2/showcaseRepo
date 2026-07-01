@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Scalar.AspNetCore;
-using StockPriceAPI.Update;
 using StockPriceAPI.Stocks;
+using StockPriceAPI.Update;
+//using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +11,44 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors();
 builder.Services.AddMemoryCache();
 
+if (builder.Environment.IsProduction())
+{
+    var keyVaultUri = builder.Configuration["AzureKeyVaultUrl"];
+    //builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), new DefaultAzureCredential());
+}
+else
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration["baseConnectionString"];
+    var conStrBuilder = new Npgsql.NpgsqlConnectionStringBuilder(connectionString)
+    {
+        Password = builder.Configuration["DbPassword"]
+    };
+
+    if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
+        || conStrBuilder.Host == "localhost"
+        || conStrBuilder.Host == "127.0.0.1")
+    {
+        conStrBuilder.Host = "host.docker.internal";
+    }
+
+    var connection = conStrBuilder.ConnectionString;
+
+    options.UseNpgsql(connection);
+
+    // "host=localhost;port=5432;database=postgres;userId=postgres;password=admin"
+});
 
 builder.Services.AddHttpClient<StocksClient>(httpClient =>
 {
     var uri = builder.Configuration["Stocks:ApiUrl"];
     if (uri is not null)
     {
-        httpClient.BaseAddress = new Uri(builder.Configuration["Stocks:ApiUrl"]);
+        httpClient.BaseAddress = new Uri(uri);
     }
 });
 
@@ -49,9 +80,17 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSignalR();
 
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration["StorageConnection:blobServiceUri"]!).WithName("StorageConnection");
+    clientBuilder.AddQueueServiceClient(builder.Configuration["StorageConnection:queueServiceUri"]!).WithName("StorageConnection");
+    clientBuilder.AddTableServiceClient(builder.Configuration["StorageConnection:tableServiceUri"]!).WithName("StorageConnection");
+});
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
+app.UseStaticFiles();
 app.MapStaticAssets();
 
 using (var scope = app.Services.CreateScope())
@@ -73,7 +112,7 @@ if (app.Environment.IsDevelopment())
         .AllowCredentials());
 }
 
-app.MapGet("/api/stocks", async (string ticker, StockService stockService, CancellationToken cancellationToken) =>
+/*app.MapGet("/api/stocks", async (string ticker, StockService stockService, CancellationToken cancellationToken) =>
 {
     try
     {
@@ -87,12 +126,12 @@ app.MapGet("/api/stocks", async (string ticker, StockService stockService, Cance
 
     //StockPriceRecord? result = await stockService.GetLatestStockPrice(ticker, cancellationToken);
 
-    /*return result is null
+    *//*return result is null
         ? Results.NotFound($"No stock data available for ticker: {ticker}")
-        : Results.Ok(result);*/
+        : Results.Ok(result);*//*
 })
 .WithName("GetLatestStockPrice")
-.WithOpenApi();
+.WithOpenApi();*/
 
 app.UseCors("AllowAngularApp");
 app.UseCors("SignalRPolicy");
@@ -104,6 +143,8 @@ app.UseAuthorization();
 app.MapHub<StocksFeedHub>("/stocks-feed").RequireCors("SignalRPolicy");
 
 //app.MapControllers();
+
+app.MapStockPriceEndpoints();
 
 app.MapFallbackToFile("/index.html");
 

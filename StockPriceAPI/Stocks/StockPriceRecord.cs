@@ -7,5 +7,5 @@ public sealed record StockPriceRecord
     public decimal Price { get; set; }
     public DateTime Timestamp { get; set; }
 
-    public StockPriceRecord() {}
+    public StockPriceRecord() { }
 }

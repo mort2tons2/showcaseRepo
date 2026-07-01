@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { action, StockService } from '../services/stock.service';
 import { Chart, registerables } from 'chart.js';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-widget',
@@ -39,7 +39,9 @@ export class Widget implements OnInit, OnDestroy {
   @Output() remove = new EventEmitter<string>();
   @ViewChild('stockChart', { static: true }) stockChart!: ElementRef<HTMLCanvasElement>;
 
-  price: number | null = null;
+  priceStream = new BehaviorSubject<number>(0);
+  price$ = this.priceStream.asObservable();
+
   lastPrice: number | null = null;
   currentChangePercent: number = 0;
   currentChange: number = 0;
@@ -89,8 +91,10 @@ export class Widget implements OnInit, OnDestroy {
 
   updatePrice(newPrice: number) {
     if (this.lastPrice === null || this.lastPrice === 0) {
-      this.price = newPrice;
-      this.updateChart(newPrice);
+      this.priceStream.next(newPrice);
+
+      //this.updateChart(newPrice);
+
       this.lastPrice = newPrice;
       return;
     }
@@ -98,10 +102,16 @@ export class Widget implements OnInit, OnDestroy {
     this.currentChange = newPrice - this.lastPrice;
     this.currentChangePercent = (this.currentChange / this.lastPrice) * 100;
 
-    this.price = newPrice;
-    this.updateChart(newPrice);
+    this.priceStream.next(newPrice);
+
+    //this.updateChart(newPrice);
     this.lastPrice = newPrice;
   }
+
+  /* onPriceUpdateReceived(incomingPrice: number) {
+    this.priceStream.next(incomingPrice);
+    //this.updateChart(incomingPrice);
+  } */
 
   initializeChart() {}
 

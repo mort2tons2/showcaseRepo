@@ -18,13 +18,13 @@
       </form>
       <button matFab extended (click)="addStock()">
         <mat-icon>add</mat-icon>
-        Add stock
+        Add ticker
       </button>
       <button matButton (click)="toggleDarkMode()">Toggle Dark/Light Mode</button>
     </section>
 
     <section>
-      @for (ticker of stockTickers; track $index) {
+      @for (ticker of stockTickers; track ticker) {
         <app-widget [ticker]="ticker" (remove)="removeStock($event)"></app-widget>
       }
     </section>

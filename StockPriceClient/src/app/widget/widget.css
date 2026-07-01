@@ -11,3 +11,13 @@ section {
   margin-bottom: 8px;
   margin-right: 8px;
 }
+
+.stock-up {
+  color: #16a34a; /* A nice, vibrant green */
+  font-weight: bold;
+}
+
+.stock-down {
+  color: #dc2626; /* A clean, clear red */
+  font-weight: bold;
+}
