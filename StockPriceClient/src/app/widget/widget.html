@@ -10,7 +10,9 @@
 
   <mat-card-content>
     <h4>${{ price$ | async | number: '1.2-2' }}</h4>
-    Chart here
+    <div class="chart-container">
+      <canvas #stockChart></canvas>
+    </div>
 
     <span
       [ngClass]="{

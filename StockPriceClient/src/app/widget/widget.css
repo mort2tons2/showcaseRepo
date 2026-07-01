@@ -13,11 +13,16 @@ section {
 }
 
 .stock-up {
-  color: #16a34a; /* A nice, vibrant green */
+  color: #16a34a;
   font-weight: bold;
 }
 
 .stock-down {
-  color: #dc2626; /* A clean, clear red */
+  color: #dc2626;
   font-weight: bold;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
 }
