@@ -1,7 +1,7 @@
 Current version:
-<img width="885" height="503" alt="Screenshot 2026-07-01 135237" src="https://github.com/user-attachments/assets/ed005e88-cf3b-4bae-9ce3-6bb8b086a62a" />
+<img width="1172" height="646" alt="Screenshot 2026-07-01 161905" src="https://github.com/user-attachments/assets/7469b8b7-001a-421d-af5f-d7a14bc55ecc" />
 
-https://github.com/user-attachments/assets/d77a2730-3128-487c-a88e-6b1e34efeb70
+https://github.com/user-attachments/assets/87646d8e-bd4b-4382-82b7-dfedda651233
 
 
 
