@@ -1,5 +1,9 @@
 Current version:
-<img width="1496" height="630" alt="image" src="https://github.com/user-attachments/assets/38be906f-7f13-4594-914f-caa9bc548693" />
+<img width="885" height="503" alt="Screenshot 2026-07-01 135237" src="https://github.com/user-attachments/assets/ed005e88-cf3b-4bae-9ce3-6bb8b086a62a" />
+
+https://github.com/user-attachments/assets/d77a2730-3128-487c-a88e-6b1e34efeb70
+
+
 
 This is work in progress
 
