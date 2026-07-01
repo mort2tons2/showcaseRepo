@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:60448",
 "RedirectUrl": "",
 "LaunchCommand": "npm start",
-"WorkingDirectory": "C:\\Users\\dev2m\\source\\repos\\StockPriceTest\\StockPriceAPI\\..\\StockPriceClient",
+"WorkingDirectory": "C:\\Users\\dev2m\\Documents\\showcaseRepo\\StockPriceAPI\\..\\StockPriceClient",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }
