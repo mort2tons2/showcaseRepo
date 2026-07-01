@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:60448",
+"RedirectUrl": "",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\dev2m\\source\\repos\\StockPriceTest\\StockPriceAPI\\..\\StockPriceClient",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
